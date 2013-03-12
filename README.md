@@ -16,6 +16,8 @@ The application expects one command line argument, `--config path-to-config-file
 ## Configuration
 The config file is a JSON file which has the following structure.  You can also look at the sample provided in the project.  Comments in the JSON below are not to be included in the actual file (because JSON does not support comments, obviously).
 
+Setting testing to true in the config document will cause the tool to run through its routine but not actually request any of the views to warm them up.
+
     {
       "testing": false,
       "servers": [
