@@ -1,0 +1,40 @@
+{
+  "testing": false,
+  "servers": [
+    {
+      "name": "my-couch-server",
+      "url": "http://my-couch-server:5984",
+      "auth": {
+        "username": "admin",
+        "password": "sup3rsecret"
+      },
+      "databases": [
+        {
+          "name": "my-db",
+          "designDocuments": [
+            {
+              "name": "design-a-with-all-views",
+              "views": {}
+            },
+            {
+              "name": "design-b-with-only-certain-views",
+              "views": {
+                "only": [
+                  "view-a",
+                  "view-c",
+                  "view-42"
+                ]
+              }
+            },
+            {
+              "name": "design-b-with-all-but-certain-views",
+              "views": {
+                "allBut": [ "tiny-view-that-is-not-important" ]
+              }
+            }
+          ]
+        }
+      ]        
+    }
+  ]
+}
