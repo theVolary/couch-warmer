@@ -7,9 +7,9 @@ Couch Warmer is a command line tool that permits a configurable warmup of CouchD
 Typical installation involves one of these:
 
 * Clone the repo: `git clone git://github.com/theVolary/couch-warmer.git`.
-* `npm install git://github.com/theVolary/couch-warmer.git`
+* `npm install -g git://github.com/theVolary/couch-warmer.git`
 
-Running the application can be done via `node path-to-couch-warmer/main.js` or, if installed with npm, by simply running `couch-warmer`.  
+Running the application can be done via `node path-to-couch-warmer/main.js` or, if installed globally with npm, by simply running `couch-warmer`.  
   
 The application expects one command line argument, `--config path-to-config-file.json`, which should be self-explanatory.
 
