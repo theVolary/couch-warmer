@@ -31,10 +31,10 @@ Setting testing to true in the config document will cause the tool to run throug
           "databases": [ // Each array item is a database config object.
             {
               "name": "my-db",
-              "designDocuments": [  // Each array item is a design document config object.
+              "designDocuments": [  // Each array item is a design document config object.  If empty, all are processed.
                 {
                   "name": "design-a-with-all-views",
-                  "views": {} // Empty object includes all views in the design document.
+                  "views": {} // Empty object, or missing property altogether, includes all views in the design document.
                 },
                 {
                   "name": "design-b-with-only-certain-views",
