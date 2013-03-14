@@ -26,8 +26,8 @@ _.each(argv, function(v, k) {
     options[k] = argv[k] || options[k];
 });
 
-new Warmer().warm(options, function(err) {
+var warmer = new Warmer();
+warmer.cli = true;
+warmer.warm(options, function(err) {
     console.log("Done!");
 });
-
-//console.log('Nice \'n toasty.  Shutting down.');
