@@ -28,6 +28,25 @@ _.each(argv, function(v, k) {
 
 var warmer = new Warmer();
 warmer.cli = true;
+
+var daemonOptions = options.daemon;
+if (daemonOptions.enabled) {
+
+  if (daemonOptions.runAsGroup) process.setgid(daemonOptions.runAsGroup);
+  if (daemonOptions.runAsUser) process.setuid(daemonOptions.runAsUser);
+
+  var pid = daemon.daemonize({ stdout: daemonOptions.stdout, stderr: daemonOptions.stderr }, daemonOptions.pidFile);
+  console.log("Daemonized on pid " + pid);
+
+  function shutdown() {
+    console.log("Shutting down at user's request.");
+    process.exit(0);
+  }
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+}
+
 warmer.warm(options, function(err) {
     console.log("Done!");
 });
