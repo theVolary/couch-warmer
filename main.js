@@ -28,6 +28,36 @@ _.each(argv, function(v, k) {
 
 var warmer = new Warmer();
 warmer.cli = true;
-warmer.warm(options, function(err) {
-    console.log("Done!");
-});
+
+var daemonOptions = options.daemon;
+if (daemonOptions.enabled) {
+  var daemon = require('daemon');
+  
+  var pid = daemon.daemonize({ stdout: daemonOptions.stdout, stderr: daemonOptions.stderr }, daemonOptions.pidFile);
+
+  if(!pid) {
+    console.log('Error starting daemon: \n', err);
+    return process.exit(-1);
+  } else {
+    console.log("Daemonized on pid " + pid);
+    warmer.warm(options, function(err) {
+     console.log("Done!");
+    });
+  }
+
+  function shutdown() {
+    console.log("Shutting down on user request.");
+
+    setTimeout(function() {
+      process.exit(0);
+    }, 1000); 
+  }
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+}
+else {
+  warmer.warm(options, function(err) {
+      console.log("Done!");
+  });
+}
