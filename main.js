@@ -31,22 +31,33 @@ warmer.cli = true;
 
 var daemonOptions = options.daemon;
 if (daemonOptions.enabled) {
-
-  if (daemonOptions.runAsGroup) process.setgid(daemonOptions.runAsGroup);
-  if (daemonOptions.runAsUser) process.setuid(daemonOptions.runAsUser);
-
+  var daemon = require('daemon');
+  
   var pid = daemon.daemonize({ stdout: daemonOptions.stdout, stderr: daemonOptions.stderr }, daemonOptions.pidFile);
-  console.log("Daemonized on pid " + pid);
+
+  if(!pid) {
+    console.log('Error starting daemon: \n', err);
+    return process.exit(-1);
+  } else {
+    console.log("Daemonized on pid " + pid);
+    warmer.warm(options, function(err) {
+     console.log("Done!");
+    });
+  }
 
   function shutdown() {
-    console.log("Shutting down at user's request.");
-    process.exit(0);
+    console.log("Shutting down on user request.");
+
+    setTimeout(function() {
+      process.exit(0);
+    }, 1000); 
   }
 
   process.on('SIGINT', shutdown);
   process.on('SIGTERM', shutdown);
 }
-
-warmer.warm(options, function(err) {
-    console.log("Done!");
-});
+else {
+  warmer.warm(options, function(err) {
+      console.log("Done!");
+  });
+}
