@@ -4,12 +4,12 @@
   "dependencies": {
     "underscore": {
       "version": "1.4.4",
-      "from": "underscore@",
+      "from": "https://registry.npmjs.org/underscore/-/underscore-1.4.4.tgz",
       "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.4.4.tgz"
     },
     "request": {
       "version": "2.14.0",
-      "from": "request@",
+      "from": "https://registry.npmjs.org/request/-/request-2.14.0.tgz",
       "resolved": "https://registry.npmjs.org/request/-/request-2.14.0.tgz",
       "dependencies": {
         "form-data": {
@@ -40,13 +40,18 @@
     },
     "optimist": {
       "version": "0.3.5",
-      "from": "optimist@",
+      "from": "optimist@0.3.5",
       "dependencies": {
         "wordwrap": {
           "version": "0.0.2",
-          "from": "wordwrap@~0.0.2"
+          "from": "wordwrap@0.0.2"
         }
       }
+    },
+    "daemon": {
+      "version": "1.0.0",
+      "from": "daemon@1.0",
+      "resolved": "https://registry.npmjs.org/daemon/-/daemon-1.0.0.tgz"
     }
   }
 }
