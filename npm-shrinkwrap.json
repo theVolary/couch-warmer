@@ -49,9 +49,9 @@
       }
     },
     "daemon": {
-      "version": "1.0.0",
-      "from": "daemon@1.0",
-      "resolved": "https://registry.npmjs.org/daemon/-/daemon-1.0.0.tgz"
+      "version": "0.5.1",
+      "from": "daemon@0.5.1",
+      "resolved": "https://registry.npmjs.org/daemon/-/daemon-0.5.1.tgz"
     }
   }
 }
