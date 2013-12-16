@@ -13,7 +13,7 @@
     "underscore": "1.5.2",
     "request": "~2.x",
     "optimist": "0.6.0",
-    "daemon": "1.1.0"
+    "daemon": "0.5.1"
   },
   "bin": {
     "couch-warmer": "./main.js"
