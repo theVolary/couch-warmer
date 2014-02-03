@@ -12,8 +12,6 @@
         "enabled": true,
         "runAsGroup": "",
         "runAsUser": "",
-        "stdout": "",
-        "stderr": "",
         "pidPath": ""
       },
       "databases": [
