@@ -8,6 +8,14 @@
         "username": "admin",
         "password": "sup3rsecret"
       },
+      "daemon": {
+        "enabled": true,
+        "runAsGroup": "",
+        "runAsUser": "",
+        "stdout": "",
+        "stderr": "",
+        "pidPath": ""
+      },
       "databases": [
         {
           "name": "my-db",

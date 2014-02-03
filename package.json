@@ -4,13 +4,17 @@
   "description": "A CLI tool that allows you to preheat a set of CouchDB views..",
   "author": "Steve Krenek <steve@thevolary.com>",
   "readmeFilename": "README.md",
-  "repository": { "type": "git", "url": "git://github.com/theVolary/couch-warmer.git" },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/theVolary/couch-warmer.git"
+  },
   "main": "main.js",
   "dependencies": {
     "underscore": "~1.4",
     "request": "~2.14",
     "optimist": "~0.3",
-    "daemon": "~1.0"
+    "daemon": "~1.1.0",
+    "moment": "~2.5.1"
   },
   "bin": {
     "couch-warmer": "./main.js"
