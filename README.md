@@ -18,6 +18,8 @@ The config file is a JSON file which has the following structure.  You can also 
 
 Setting testing to true in the config document will cause the tool to run through its routine but not actually request any of the views to warm them up.
 
+Adding the daemon object and setting enabled to true will run the process as a daemon, setting to false will run as a normal process in the shell.
+
     {
       "testing": false,
 

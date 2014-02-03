@@ -29,7 +29,6 @@ _.each(argv, function(v, k) {
 
 var daemonOptions = options.daemon;
 if (daemonOptions.enabled) {
-
   console.log("Daemonizing...");
 
   var args = [].concat(process.argv);

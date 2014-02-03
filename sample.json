@@ -42,5 +42,11 @@
         }
       ]        
     }
-  ]
+  ],
+  "daemon" : {
+    "enabled" : true,
+    "stdout" : "log.log",
+    "stderr" : "error.log",
+    "pidFile" : "./node.pid"
+  }
 }
