@@ -3,6 +3,7 @@
 var argv = require('optimist').argv,
     fs = require('fs'),
     _ = require('underscore'),
+    moment = require('moment'),
     Warmer = require('./lib/warmer');
 
 if (!argv.config) {
@@ -26,38 +27,55 @@ _.each(argv, function(v, k) {
     options[k] = argv[k] || options[k];
 });
 
-var warmer = new Warmer();
-warmer.cli = true;
-
 var daemonOptions = options.daemon;
 if (daemonOptions.enabled) {
-  var daemon = require('daemon');
-  
-  var pid = daemon.daemonize({ stdout: daemonOptions.stdout, stderr: daemonOptions.stderr }, daemonOptions.pidFile);
+  console.log("Daemonizing...");
 
-  if(!pid) {
-    console.log('Error starting daemon: \n', err);
-    return process.exit(-1);
+  var args = [].concat(process.argv);
+  var script = args.shift();
+  console.log('script is ' + script);
+  console.log('args are ' + JSON.stringify(args));
+  require('daemon').daemon(script, args, {});
+
+  if (daemonOptions.pidPath && daemonOptions.pidPath.length) {
+    fs.writeFileSync(daemonOptions.pidPath, process.pid);
   } else {
-    console.log("Daemonized on pid " + pid);
-    warmer.warm(options, function(err) {
-     console.log("Done!");
-    });
+    console.log("Not writing a pid file.");
+  }
+
+  console.log("Daemonized on pid " + process.pid);
+
+  if (process.env['USER'] === 'root') {
+    if (daemonOptions.runAsGroup && daemonOptions.runAsGroup.length) {
+      process.setgid(daemonOptions.runAsGroup);
+      console.log('Running as group ' + daemonOptions.runAsGroup + " (" + process.getgid() + ")");
+    }
+
+    if (daemonOptions.runAsUser && daemonOptions.runAsUser.length) {
+      process.setuid(daemonOptions.runAsUser);
+      console.log('Running as user ' + daemonOptions.runAsUser + " (" + process.getuid() + ")");
+    }
   }
 
   function shutdown() {
-    console.log("Shutting down on user request.");
-
-    setTimeout(function() {
-      process.exit(0);
-    }, 1000); 
+    console.log("Shutting down at user's request.");
+    if (daemonOptions.enabled && daemonOptions.pidPath) {
+      fs.unlinkSync(daemonOptions.pidPath);
+    }
+    process.exit(0);
   }
 
   process.on('SIGINT', shutdown);
   process.on('SIGTERM', shutdown);
 }
-else {
-  warmer.warm(options, function(err) {
-      console.log("Done!");
-  });
-}
+
+var warmer = new Warmer();
+warmer.cli = true;
+
+var startTime = new Date().getTime();
+warmer.warm(options, function(err) {
+    console.log("Done!  Started " + moment(startTime).fromNow());
+    if (daemonOptions.enabled && daemonOptions.pidPath) {
+      fs.unlinkSync(daemonOptions.pidPath);
+    }
+});

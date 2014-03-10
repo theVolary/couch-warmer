@@ -22,6 +22,14 @@ Adding the daemon object and setting enabled to true will run the process as a d
 
     {
       "testing": false,
+
+      "daemon": {
+        "enabled": true, // if true, daemonize on startup.
+        "runAsGroup": "", // the group to switch to, if started as root
+        "runAsUser": "", // the user to switch to, if started as root
+        "pidPath": "" // the path to write a pid file to
+      },
+      
       "servers": [
         {
           "name": "my-couch-server",
@@ -61,11 +69,10 @@ Adding the daemon object and setting enabled to true will run the process as a d
             }
           ]        
         }
-      ],
-      "daemon" : {
-        "enabled" : true,
-        "stdout" : "log.log",
-        "stderr" : "error.log",
-        "pidFile" : "./node.pid"
-      }
+      ]
     }
+
+## Daemonizing
+See the `daemon` section of Configuration above for configuration options.  If you want to capture stdout and stderr to files, redirect the output via shell arguments.  See below for an example.
+
+`couch-warmer --config myconfig.json >myconfig.out 2>myconfig.err`
